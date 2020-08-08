@@ -1,5 +1,6 @@
 # appconfig
 
+[![GoDoc](https://godoc.org/github.com/qeubar/appconfig?status.svg)](https://godoc.org/github.com/qeubar/appconfig)
 [![Build Status](https://travis-ci.com/qeubar/appconfig.svg?branch=master)](https://travis-ci.com/qeubar/appconfig)
 
 appconfig is a very simple platform independent config file management.
