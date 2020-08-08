@@ -92,7 +92,7 @@ func Update(config interface{}, app string) error {
 		return err
 	}
 
-	return ioutil.WriteFile(configFilePath, cfgBody, 0644)
+	return ioutil.WriteFile(configFilePath, cfgBody, os.ModePerm)
 }
 
 func configFilePath(app string) (string, error) {
@@ -101,7 +101,7 @@ func configFilePath(app string) (string, error) {
 		return "", err
 	}
 
-	err = os.MkdirAll(filepath.Join(configDir, app), 0644)
+	err = os.MkdirAll(filepath.Join(configDir, app), os.ModePerm)
 	if err != nil {
 		return "", err
 	}

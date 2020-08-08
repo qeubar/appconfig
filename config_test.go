@@ -1,6 +1,7 @@
 package appconfig
 
 import (
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -18,6 +19,10 @@ func TestConfigFilePath(t *testing.T) {
 
 	require.NoError(t, err)
 	assert.Equal(t, fp, filepath.Join(osCfgDir, "my-app", "config"))
+
+	// Ensure that application can write to file
+	err = ioutil.WriteFile(fp, nil, os.ModePerm)
+	assert.NoError(t, err)
 }
 
 func TestConfigFileType(t *testing.T) {
