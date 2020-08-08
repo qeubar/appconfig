@@ -1,5 +1,7 @@
 # appconfig
 
+[![Build Status](https://travis-ci.com/qeubar/appconfig.svg?branch=master)](https://travis-ci.com/qeubar/appconfig)
+
 appconfig is a very simple platform independent config file management.
 
 ## Usage
