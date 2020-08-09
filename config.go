@@ -111,6 +111,11 @@ func configFilePath(app string) (string, error) {
 
 func configFileType(config interface{}) (string, error) {
 	t := reflect.TypeOf(config)
+	if t.Kind() == reflect.Ptr {
+		// Extract the underlying object
+		t = t.Elem()
+	}
+
 	if t.Kind() != reflect.Struct {
 		return "", errors.New("config must be a struct")
 	}

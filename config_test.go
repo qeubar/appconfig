@@ -53,6 +53,15 @@ func TestConfigFileType(t *testing.T) {
 		assert.Equal(t, cftXML, cft)
 	})
 
+	t.Run("detects *struct", func(t *testing.T) {
+		type J struct {
+			A string `json:"a"`
+		}
+		cft, err := configFileType(&J{})
+		require.NoError(t, err)
+		assert.Equal(t, cftJSON, cft)
+	})
+
 	t.Run("errors on non-struct ", func(t *testing.T) {
 		_, err := configFileType("qeubar")
 		assert.Error(t, err)
