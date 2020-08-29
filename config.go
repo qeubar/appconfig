@@ -1,6 +1,8 @@
 // Package usrconfig provides a minimal interface to store and update user specific
 // application config on the supported platform. It takes away guess work and indecisiveness by
-// using the default application config directory based on the running platform.
+// using the default user config directory based on the running platform.
+//
+// It supports structs of `json`, `yaml` and `xml` format.
 //
 // It's as simple as:
 //  type MyConfig struct {
@@ -10,6 +12,9 @@
 //
 //  var conf MyConfig
 //  usrconfig.Load(&conf, "my-app")
+//
+//  conf.Email = "updated@email.com"
+//  usrconfig.Update(conf, "my-app")
 package usrconfig
 
 import (
@@ -30,9 +35,15 @@ const (
 	cftXML  = "xml"
 )
 
-// Load will load an existing "config" for "app".
-// It supports structs of `json`, `yaml` and `xml` format.
+// Load will load an existing "config" for "app" saved under the
+// user's config directory. If no config file exists for user,
+// "config" remains empty and no error is returned.
 func Load(config interface{}, app string) error {
+	cft, err := configFileType(config)
+	if err != nil {
+		return err
+	}
+
 	configFilePath, err := configFilePath(app)
 	if err != nil {
 		return err
@@ -49,11 +60,6 @@ func Load(config interface{}, app string) error {
 		return err
 	}
 
-	cft, err := configFileType(config)
-	if err != nil {
-		return err
-	}
-
 	switch cft {
 	case cftJSON:
 		err = json.Unmarshal(configBody, config)
@@ -67,14 +73,14 @@ func Load(config interface{}, app string) error {
 }
 
 // Update encodes the provided "config" and saves it to the "app" config file.
-// It supports structs of `json`, `yaml` and `xml` format.
+// The file is written to the default user config directory on the platform.
 func Update(config interface{}, app string) error {
-	configFilePath, err := configFilePath(app)
+	cft, err := configFileType(config)
 	if err != nil {
 		return err
 	}
 
-	cft, err := configFileType(config)
+	configFilePath, err := configFilePath(app)
 	if err != nil {
 		return err
 	}
@@ -86,7 +92,7 @@ func Update(config interface{}, app string) error {
 	case cftYAML:
 		cfgBody, err = yaml.Marshal(config)
 	case cftXML:
-		cfgBody, err = xml.MarshalIndent(config, "  ", "    ")
+		cfgBody, err = xml.MarshalIndent(config, "", "  ")
 	}
 	if err != nil {
 		return err

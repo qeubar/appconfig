@@ -10,6 +10,90 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func cleanUpTestConfig(t *testing.T, app string) {
+	fp, err := configFilePath(app)
+	require.NoError(t, err)
+	os.RemoveAll(fp)
+}
+
+func TestLoad(t *testing.T) {
+	t.Run("handles no config file", func(t *testing.T) {
+		type conf struct {
+			User  string `xml:"user"`
+			Email string `xml:"email"`
+		}
+
+		var c conf
+		err := Load(&c, t.Name())
+		assert.NoError(t, err, "did not ignore non-existent config")
+		assert.Empty(t, c)
+	})
+	t.Run("returns unsupported struct", func(t *testing.T) {
+		type conf struct {
+			User  string `db:"user"`
+			Email string `db:"email"`
+		}
+
+		var c conf
+		err := Load(&c, t.Name())
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "unsupported")
+		assert.Empty(t, c)
+	})
+}
+
+func TestUpdate(t *testing.T) {
+	t.Run("returns marshal err on bad struct", func(t *testing.T) {
+		type conf struct {
+			User  string      `xml:"user"`
+			Email interface{} `xml:",comment"`
+		}
+		c := conf{
+			User:  "bardia",
+			Email: nil,
+		}
+		err := Update(c, t.Name())
+		assert.Error(t, err)
+	})
+	t.Run("returns unsupported struct", func(t *testing.T) {
+		type conf struct {
+			User  string `db:"user"`
+			Email string `db:"email"`
+		}
+		c := conf{
+			User:  "bardia",
+			Email: "bardia@keyoumarsi.com",
+		}
+
+		err := Update(c, t.Name())
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "unsupported")
+	})
+}
+
+func TestLoadAndUpdate(t *testing.T) {
+	defer cleanUpTestConfig(t, t.Name())
+
+	type conf struct {
+		User  string `json:"user"`
+		Email string `json:"email"`
+	}
+
+	c := conf{
+		User:  "bardia",
+		Email: "bardia@keyoumarsi.com",
+	}
+
+	err := Update(c, t.Name())
+	require.NoError(t, err)
+
+	var savedConf conf
+	err = Load(&savedConf, t.Name())
+	require.NoError(t, err)
+
+	assert.Equal(t, c, savedConf)
+}
+
 func TestConfigFilePath(t *testing.T) {
 	osCfgDir, err := os.UserConfigDir()
 	require.NoError(t, err)
