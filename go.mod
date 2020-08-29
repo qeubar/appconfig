@@ -1,4 +1,4 @@
-module github.com/qeubar/appconfig
+module github.com/qeubar/usrconfig
 
 go 1.14
 

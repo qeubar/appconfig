@@ -1,16 +1,16 @@
-// Package appconfig provides a minimal interface to store and update user specific
+// Package usrconfig provides a minimal interface to store and update user specific
 // application config on the supported platform. It takes away guess work and indecisiveness by
 // using the default application config directory based on the running platform.
 //
 // It's as simple as:
-// type MyConfig struct {
+//  type MyConfig struct {
 //		Name  string `yaml:"user_name"`
 //		Email string `yaml:"user_email"`
-// }
+//  }
 //
-// var conf MyConfig
-// appconfig.Load(&conf, "my-app")
-package appconfig
+//  var conf MyConfig
+//  usrconfig.Load(&conf, "my-app")
+package usrconfig
 
 import (
 	"encoding/json"

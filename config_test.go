@@ -1,4 +1,4 @@
-package appconfig
+package usrconfig
 
 import (
 	"io/ioutil"

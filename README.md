@@ -1,15 +1,15 @@
-# appconfig
+# usrconfig
 
-[![GoDoc](https://godoc.org/github.com/qeubar/appconfig?status.svg)](https://godoc.org/github.com/qeubar/appconfig)
-[![Build Status](https://travis-ci.com/qeubar/appconfig.svg?branch=master)](https://travis-ci.com/qeubar/appconfig)
+[![GoDoc](https://godoc.org/github.com/qeubar/usrconfig?status.svg)](https://godoc.org/github.com/qeubar/usrconfig)
+[![Build Status](https://travis-ci.com/qeubar/usrconfig.svg?branch=master)](https://travis-ci.com/qeubar/usrconfig)
 
-appconfig is a very simple platform independent config file management.
+usrconfig is a very simple platform independent user config anagement.
 
 ## Usage
 
 ```go
 
-import "github.com/quebar/appconfig"
+import "github.com/quebar/usrconfig"
 
 type MyConfig struct {
     Name  string `yaml:"user_name"`
@@ -21,8 +21,8 @@ conf := MyConfig{
     Email: "que@bar.com",
 }
 
-appconfig.Update(conf, "my-app")
+usrconfig.Update(conf, "my-app")
 ```
 
 ### Supported platforms
-appconfig is built to work on any platform that supports Go.
+usrconfig is built to work on any platform that supports Go.
