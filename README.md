@@ -1,7 +1,9 @@
 # usrconfig
 
-[![GoDoc](https://godoc.org/github.com/qeubar/usrconfig?status.svg)](https://godoc.org/github.com/qeubar/usrconfig)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/qeubar/usrconfig?tab=doc)](https://pkg.go.dev/github.com/qeubar/usrconfig?tab=doc)
 [![Build Status](https://travis-ci.com/qeubar/usrconfig.svg?branch=master)](https://travis-ci.com/qeubar/usrconfig)
+[![Go Report Card](https://goreportcard.com/badge/github.com/qeubar/usrconfig)](https://goreportcard.com/report/github.com/qeubar/usrconfig)
+[![Coverage](https://img.shields.io/badge/coverage-83%25-green)](https://htmlpreview.github.io/?https://github.com/qeubar/usrconfig/blob/master/test_coverage.html#file0)
 
 usrconfig is a very simple platform independent user config management.
 
