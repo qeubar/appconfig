@@ -3,7 +3,7 @@
 [![GoDoc](https://godoc.org/github.com/qeubar/usrconfig?status.svg)](https://godoc.org/github.com/qeubar/usrconfig)
 [![Build Status](https://travis-ci.com/qeubar/usrconfig.svg?branch=master)](https://travis-ci.com/qeubar/usrconfig)
 
-usrconfig is a very simple platform independent user config anagement.
+usrconfig is a very simple platform independent user config management.
 
 ## Usage
 
